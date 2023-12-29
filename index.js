@@ -5,7 +5,7 @@ import { registerValidation, loginValidation, postCreateValidation } from "./val
 
 import checkAuth from "./utils/checkAuth.js";
 import { getMe, login, register } from "./controllers/UserController.js";
-import { create } from "./controllers/PostContriller.js";
+import { create, getAll } from "./controllers/PostContriller.js";
 
 mongoose
   .connect("mongodb+srv://admin:lantirn1994@cluster0.mt5aysl.mongodb.net/blog?retryWrites=true&w=majority")
@@ -20,7 +20,7 @@ app.post("/auth/login", loginValidation, login);
 app.post("/auth/register", registerValidation, register);
 app.get("/auth/me", checkAuth, getMe);
 
-// app.get("/posts", getAll);
+app.get("/posts", checkAuth, postCreateValidation, getAll);
 // app.get("/posts/:id", getOne);
 app.post("/posts", checkAuth, postCreateValidation, create);
 // app.delete("/posts", remove);
