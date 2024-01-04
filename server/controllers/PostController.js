@@ -1,5 +1,3 @@
-import { validationResult } from "express-validator";
-
 import PostModel from "../models/Post.js";
 
 export const getAll = async (req, res) => {
