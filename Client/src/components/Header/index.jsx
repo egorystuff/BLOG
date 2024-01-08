@@ -27,9 +27,9 @@ export const Header = () => {
             <div>BLOG</div>
           </Link>
           <div className={styles.buttons}>
-            {isAuth ? (
+            {window.localStorage.getItem("token") || isAuth ? (
               <>
-                <Link to='/posts/create'>
+                <Link to='/add-post'>
                   <Button variant='contained'>Написать статью</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant='contained' color='error'>
