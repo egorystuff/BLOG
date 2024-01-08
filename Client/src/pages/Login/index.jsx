@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -56,10 +56,11 @@ export const Login = () => {
           label='Пароль'
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
+          type='password'
           {...register("password", { required: "Укажите пароль" })}
           fullWidth
         />
-        <Button type='submit' size='large' variant='contained' fullWidth>
+        <Button disabled={!isValid} type='submit' size='large' variant='contained' fullWidth>
           Войти
         </Button>
       </form>
