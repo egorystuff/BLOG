@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -12,10 +12,8 @@ import { fetchPost, fetchTags } from "../redux/slices/posts";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.data);
+  const userData = window.localStorage.getItem("_id");
   const { posts, tags } = useSelector((state) => state.posts);
-
-  console.log(userData);
 
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
@@ -38,6 +36,7 @@ export const Home = () => {
               <Post key={index} isLoading={true} />
             ) : (
               <Post
+                key={index}
                 id={obj._id}
                 title={obj.title}
                 imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ""}
@@ -46,7 +45,7 @@ export const Home = () => {
                 viewsCount={obj.viewsCount}
                 commentsCount={3}
                 tags={obj.tags}
-                isEditable={userData?._id === obj.user._id}
+                isEditable={userData === obj.user._id}
               />
             ),
           )}
