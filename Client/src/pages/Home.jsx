@@ -15,6 +15,8 @@ export const Home = () => {
   const userData = useSelector((state) => state.auth.data);
   const { posts, tags } = useSelector((state) => state.posts);
 
+  console.log(userData);
+
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
 
@@ -38,7 +40,7 @@ export const Home = () => {
               <Post
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl}
+                imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ""}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}

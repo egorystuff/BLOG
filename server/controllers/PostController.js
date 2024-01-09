@@ -33,8 +33,9 @@ export const getOne = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    PostModel.findOneAndUpdate({ _id: postId }, { $inc: { viewsCount: 1 } }, { returnDocument: "after" }).then(
-      (doc) => {
+    PostModel.findOneAndUpdate({ _id: postId }, { $inc: { viewsCount: 1 } }, { returnDocument: "after" })
+      .populate("user")
+      .then((doc) => {
         if (!doc) {
           return res.status(404).json({
             message: "Статья не найдена",
@@ -42,8 +43,7 @@ export const getOne = async (req, res) => {
         }
 
         res.json(doc);
-      },
-    );
+      });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -81,7 +81,7 @@ export const create = async (req, res) => {
     const doc = new PostModel({
       title: req.body.title,
       text: req.body.text,
-      tags: req.body.tags,
+      tags: req.body.tags.split(","),
       imageUrl: req.body.imageUrl,
       user: req.userId,
     });
