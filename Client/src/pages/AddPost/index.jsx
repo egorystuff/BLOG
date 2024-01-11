@@ -48,6 +48,7 @@ export const AddPost = () => {
   const onSubmit = async () => {
     try {
       setLoading(true);
+
       const fields = {
         title,
         imageUrl,
@@ -68,10 +69,9 @@ export const AddPost = () => {
   useEffect(() => {
     if (id) {
       axios.get(`/posts/${id}`).then(({ data }) => {
-        console.log(data);
         setTitle(data.title);
         setText(data.text);
-        setTags(data.tags);
+        setTags(data.tags.join(","));
         setImageUrl(data.imageUrl);
       });
     }
