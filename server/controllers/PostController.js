@@ -3,22 +3,22 @@ import PostModel from "../models/Post.js";
 export const getAll = async (req, res) => {
   try {
     let posts = await PostModel.find().populate("user").exec();
-    posts = posts.sort();
-    console.log(posts);
-    return res.json(posts);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Не удалось получить статьи",
-    });
-  }
-};
 
-export const getAllSortByData = async (req, res) => {
-  try {
-    let posts = await PostModel.find().populate("user").exec();
-    posts = posts.sort(["createdAt", 1]);
-    console.log(posts);
+    let { sort, views } = req.query;
+
+    if (sort === "dataDesc") {
+      posts = posts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      return res.json(posts);
+    }
+
+    if (sort === "viewsAsc") {
+      posts = posts.sort((a, b) => b.viewsCount - a.viewsCount);
+      return res.json(posts);
+    }
+
+    posts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    return res.json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json({

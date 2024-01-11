@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+
 import Grid from "@mui/material/Grid";
 
 import { Post } from "../components/Post";
@@ -18,17 +20,41 @@ export const Home = () => {
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
 
+  const [value, setValue] = useState("1");
+  const [sortedBy, setSortedBy] = useState("dataAsc");
+
+  //-------------------------------------------------------------------------------------------------
+
+  const handleSort = (sort) => {
+    setSortedBy(sort);
+  };
+
+  //-------------------------------------------------------------------------------------------------
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  //-------------------------------------------------------------------------------------------------
+
   useEffect(() => {
-    dispatch(fetchPost());
     dispatch(fetchTags());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchPost(sortedBy));
+  }, [sortedBy]);
+
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label='basic tabs example'>
-        <Tab label='Новые' />
-        <Tab label='Популярные' />
-      </Tabs>
+      <Box sx={{ borderBottom: 20, borderColor: "transparent", width: "100%" }}>
+        <Tabs value={value} onChange={handleChange} aria-label='wrapped label tabs example'>
+          <Tab value='1' onClick={() => handleSort("dataAsc")} label='Новые' />
+          <Tab value='2' onClick={() => handleSort("dataDesc")} label='Старые' />
+          <Tab value='3' onClick={() => handleSort("viewsAsc")} label='Популярные' />
+        </Tabs>
+      </Box>
+
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>

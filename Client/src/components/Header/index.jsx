@@ -25,7 +25,7 @@ export const Header = () => {
       <Container maxWidth='lg'>
         <div className={styles.inner}>
           <Link className={styles.logo} to='/'>
-            <div>BLOG</div>
+            <div>Egorystuff's BLOG</div>
           </Link>
           <div className={styles.buttons}>
             {window.localStorage.getItem("token") || isAuth ? (

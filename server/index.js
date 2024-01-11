@@ -11,8 +11,8 @@ import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 mongoose
   .connect("mongodb+srv://admin:lantirn1994@cluster0.mt5aysl.mongodb.net/blog?retryWrites=true&w=majority")
-  .then(() => console.log("DB OK"))
-  .catch((err) => console.log("DB error", err));
+  .then(() => console.log("Database OK"))
+  .catch((err) => console.log("Database error", err));
 
 const app = express();
 
@@ -50,7 +50,6 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------
-// app.get("/posts/:data", PostController.getAllSortByData);
 
 app.get("/posts", PostController.getAll);
 app.get("/tags", PostController.getLastTags);
