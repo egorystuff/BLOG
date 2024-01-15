@@ -27,14 +27,13 @@ export const Login = () => {
     console.log(data);
 
     if (!data.payload) return alert("Не удалось авторизоваться");
+    if ("token" in data.payload) window.localStorage.setItem("token", data.payload.token);
 
-    if ("token" in data.payload) {
-      window.localStorage.setItem("token", data.payload.token);
-    }
+    if ("_id" in data.payload) window.localStorage.setItem("_id", data.payload._id);
 
-    if ("_id" in data.payload) {
-      window.localStorage.setItem("_id", data.payload._id);
-    }
+    if ("avatarUrl" in data.payload) window.localStorage.setItem("avatarUrl", data.payload.avatarUrl);
+
+    if ("fullName" in data.payload) window.localStorage.setItem("fullName", data.payload.fullName);
   };
 
   if (isAuth) {
