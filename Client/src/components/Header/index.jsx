@@ -10,12 +10,13 @@ import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { logout, selectIsAuth } from "../../redux/slices/auth";
 import { AppContext } from "../../App";
+import BasicMenu from "../BasicMenu";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  const { avatarUrl, fullName } = useContext(AppContext);
+  const { avatarUrl } = useContext(AppContext);
 
   const onClickLogout = () => {
     if (window.confirm("Вы действительно хотите выйти?")) {
@@ -38,24 +39,21 @@ export const Header = () => {
             {window.localStorage.getItem("token") || isAuth ? (
               <>
                 <Stack direction='row' spacing={2}>
-                  <Avatar sx={{ width: 36, height: 36 }} alt='Remy Sharp' src={avatarUrl} />
-                  <div>{fullName}</div>
                   <Link to='/add-post'>
                     <Button variant='contained'>Написать статью</Button>
                   </Link>
 
-                  <Button onClick={onClickLogout} variant='contained' color='error'>
-                    Выйти
-                  </Button>
+                  <Avatar sx={{ width: 36, height: 36 }} alt='Remy Sharp' src={avatarUrl} />
+                  <BasicMenu />
                 </Stack>
               </>
             ) : (
               <>
-                <Link to='/login'>
-                  <Button variant='outlined'>Войти</Button>
-                </Link>
                 <Link to='/register'>
                   <Button variant='contained'>Создать аккаунт</Button>
+                </Link>
+                <Link to='/login'>
+                  <Button variant='outlined'>Войти</Button>
                 </Link>
               </>
             )}
