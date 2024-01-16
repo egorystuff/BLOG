@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -10,10 +10,13 @@ import { useForm } from "react-hook-form";
 
 import styles from "./Login.module.scss";
 import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
+import { AppContext } from "../../App";
 
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
+
+  const { setAvatarUrl, setFullName } = useContext(AppContext);
 
   const {
     register,
@@ -31,9 +34,15 @@ export const Login = () => {
 
     if ("_id" in data.payload) window.localStorage.setItem("_id", data.payload._id);
 
-    if ("avatarUrl" in data.payload) window.localStorage.setItem("avatarUrl", data.payload.avatarUrl);
+    if ("avatarUrl" in data.payload) {
+      window.localStorage.setItem("avatarUrl", data.payload.avatarUrl);
+      setAvatarUrl(window.localStorage.getItem("avatarUrl"));
+    }
 
-    if ("fullName" in data.payload) window.localStorage.setItem("fullName", data.payload.fullName);
+    if ("avatarUrl" in data.payload) {
+      window.localStorage.setItem("fullName", data.payload.fullName);
+      setFullName(window.localStorage.getItem("fullName"));
+    }
   };
 
   if (isAuth) {

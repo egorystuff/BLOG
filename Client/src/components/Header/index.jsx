@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@mui/material/Button";
@@ -9,13 +9,13 @@ import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { logout, selectIsAuth } from "../../redux/slices/auth";
+import { AppContext } from "../../App";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  let avatarUrl = window.localStorage.getItem("avatarUrl");
-  let fullName = window.localStorage.getItem("fullName");
+  const { avatarUrl, fullName } = useContext(AppContext);
 
   const onClickLogout = () => {
     if (window.confirm("Вы действительно хотите выйти?")) {
